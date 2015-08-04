@@ -1,0 +1,52 @@
+#include <unistd.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void print_prompt()
+{
+	printf("myshell : ");
+	return;
+}
+
+void get_input(char *input)
+{
+	setpgrp();
+	scanf("%s\n",input);
+	return;
+}
+
+void print_output(char *input)
+{
+	printf("%s\n",input);
+	return;
+}
+
+int main()
+{
+	int j;
+	int pid=fork();
+	if(pid==0)
+	{
+		char input[100],c;
+		//strcpy(input,"begin");
+		//while(strcmp(input,"quit")!=0)
+		//{
+			//scanf("%c",&c);
+			while(1)
+			{
+			print_prompt();
+			get_input(input);
+			print_output(input);
+			//sleep(1);
+			//if(strcmp(input,"pwd")==0
+			}
+		//}
+	}
+	else
+	{wait(&j);}
+	return 0;
+}
+
+
+

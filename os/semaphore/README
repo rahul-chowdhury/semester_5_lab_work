@@ -1,0 +1,7 @@
+1.Here process1 is the process which is generating the numbers using the rand function and printing the factorial.
+2.And process2 is the process which is generating the factorials.
+3.Follow the steps to create executable file for the both processes.
+  cc process1.c -o exe1
+  cc process2.c -o exe2
+In this manner executable files named exe1 and exe2 will be generated.
+4.Run the two programs in separate terminals.  

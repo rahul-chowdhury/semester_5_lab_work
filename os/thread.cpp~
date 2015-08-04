@@ -1,0 +1,28 @@
+#include<iostream>
+#include<unistd.h>
+#include<pthread.h>
+#include<string>
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+using namespace std;
+ 
+void * file_write(void * filename)
+{
+	cout<<*((string *)filename)<<endl;
+	int x=rand()%100;
+	FILE *f=fopen(*((string *)filename).c_str(),"w+");
+	fprintf(f,"%d\n",x);
+	fclose(f);
+}
+int main(int argc,char *argv[])
+{
+	pthread_t thread_array[argc-1];
+	for(int i=0;i<(argc-1);i++)
+	{
+		string s=argv[i+1];
+		pthread_create(&thread_array[i],NULL,file_write,(void *)&s);
+		sleep(1);
+	}
+	return 0;
+}

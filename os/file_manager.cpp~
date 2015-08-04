@@ -1,0 +1,86 @@
+#include <dirent.h> 
+#include <stdio.h> 
+#include<string.h>
+#include<iostream>
+using namespace std;
+int exit=0;
+void current_directory(const char *pwd)
+{
+  DIR *d;
+  char *pwd1=new char[100];
+  strcpy(pwd1,pwd);
+  strcat(pwd1,"/");
+  struct dirent *dir;
+  
+  int count,choice,i;
+  while(exit==0)
+  {d = opendir(pwd);
+  count=0;
+  if (d)//printing contents
+  {
+  cout<<"0.	EXIT"<<endl;
+    while ((dir = readdir(d)) != NULL)
+    {
+    	count++;
+    	printf("%d.	%s\n",count, dir->d_name);
+    }	
+   
+  } 
+  else
+  {
+  	cout<<"not a directory"<<endl;
+  	return;
+  }
+  closedir(d);
+  char name[count][100];
+  count=0;
+  d = opendir(pwd);
+  if (d)//loading contents into array
+  {
+    while ((dir = readdir(d)) != NULL)
+    {
+    	strcpy(name[count],dir->d_name);
+    	count++;
+    	
+    }
+    
+  }
+  else
+  {
+  	cout<<"not a directory"<<endl;
+  	return;
+  }
+  closedir(d);
+ // for(i=0;i<count;i++)
+  //cout<<name[i]<<endl;
+  cout<<"enter your choice: ";
+ cin>>choice;
+  if(choice==0)
+  {
+  	exit=1;
+  	return;
+  }
+  /*else if(choice==count)
+  {
+  	return;
+  }*/
+  else if(choice==count-1)
+  {
+  	continue;
+  }
+  else
+  {
+  	strcat(pwd1,name[choice-1]);
+  	cout<<"relative address of current directory: "<<pwd1<<<<endl;
+  	current_directory(pwd1);
+  }
+  }
+  
+}
+
+int main()
+{
+	char *a=new char[100];
+	current_directory(".");
+		return 0;
+}

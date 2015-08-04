@@ -1,0 +1,12 @@
+int ab;
+int ba;
+int ac;
+int ca;
+char xyz;
+char yzx;
+char xzy;
+float fa;
+float fb;
+float fc;
+int ar[2];
+float fd[5];

@@ -1,0 +1,10 @@
+print 
+search a
+print 
+search b
+print 
+delete b
+print 
+search b
+print 
+END

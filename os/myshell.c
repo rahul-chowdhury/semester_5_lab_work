@@ -1,0 +1,104 @@
+#include <unistd.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<sys/times.h>
+#include <time.h>
+
+int main()
+{
+	int j=0,j2=0;
+	int pid=fork();
+	if(pid==0)
+	{
+		char input[100],temp[100],*word;
+		strcpy(input,"begin");
+		char history[2000][100];
+		int x=0;
+		
+		
+		//struct tms *buf1=(struct tms *)malloc(sizeof(struct tms));
+		while(strcmp(input,"exit")!=0)
+		{
+			
+			printf("MYSHELL:%s$ ",getcwd(NULL,0));
+			fflush(stdout);
+			gets(input);
+			fflush(stdin);
+			strcpy(history[x++],input);
+			strcpy(temp,input);
+			word=strtok(temp," ");
+			
+			if(strcmp(input,"pwd")==0)
+			{
+				printf("%s\n",getcwd(NULL,0));
+				fflush(stdout);
+			}
+			else if(strcmp(input,"history")==0)
+			{
+				int i=0;
+				for(i=0;i<x;i++)
+					printf("%d. %s\n",i,history[i]);
+				fflush(stdout);
+			}
+			else if(strcmp(input,"times")==0)
+			{
+				struct tms *buf=(struct tms *)malloc(sizeof(struct tms));
+				times(buf); 
+				
+				printf("%f\n",buf->tms_utime);
+				printf("%f\n",buf->tms_stime);
+				printf("%f\n",buf->tms_cutime);
+				printf("%f\n",buf->tms_cstime);
+				fflush(stdout);
+			}
+			else if(strcmp(word,"cd")==0)
+			{
+				word=strtok(NULL," ");
+				char address[100];
+				strcpy(address,getcwd(NULL,0));
+				strcat(address,"/");
+				strcat(address,word);
+				char *temp1=getcwd(NULL,0);
+				int i=chdir(address);
+				if(i==-1)
+				{
+				printf("no such file or directory\n");
+				fflush(stdout);
+				chdir(temp1);
+				}
+			}
+			else if(strcmp(word,"echo")==0)
+			{
+				int i;
+				for(i=0;input[i]!=' ';i++);
+				printf("%s\n",input+i+1);
+				fflush(stdout);
+			}
+			else
+			{
+				char external[100];
+				strcpy(external,"/bin/");
+				strcat(external,input);
+				int pid1=fork();
+				if(pid1==0)
+				{
+					execl(external,"",(char *)0);
+					exit(0);
+				}
+				else
+				{
+					wait(&j2);
+				}
+			}
+			
+			
+		}
+	}
+	else
+	{wait(&j);}
+	return 0;
+}
+
+
+

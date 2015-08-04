@@ -1,0 +1,4 @@
+1.compile the program as g++ thread.cpp -pthread
+2.execute the program as: ./a.out out1 out2 ........ outn operation
+			a)out1, out2, .....outn specifies the names of the files where the generated random numbers will be stored
+			b)operation is any one of '+', '-', '*', '/'
